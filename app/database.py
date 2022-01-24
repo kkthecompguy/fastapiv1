@@ -33,7 +33,7 @@ create_post_table = "CREATE TABLE IF NOT EXISTS posts(id serial PRIMARY KEY, tit
 
 while True:
   try:
-    conn = psycopg2.connect(host = 'localhost', database = 'fastapi', user = 'kosam', password = 'root', cursor_factory=RealDictCursor)
+    conn = psycopg2.connect(host = HOSTNAME, database = DB_NAME, user = DB_USER, password = DB_PASSWORD, cursor_factory=RealDictCursor)
     cursor = conn.cursor()
     # cursor.execute(create_post_table)
     print('database connection was successful')
