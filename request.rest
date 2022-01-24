@@ -1,30 +1,33 @@
 GET http://127.0.0.1:8000
 
 ###
-GET http://127.0.0.1:8000/posts
+GET http://127.0.0.1:8000/api/v1/posts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo3LCJleHAiOjE2NDI1MjA4ODcsImlhdCI6MTY0MjUxNzI4N30.QSTunxFRxx31zueb0hB_CCuUuA2o7wG_NYYuJ-U4cY0
 
 ###
-POST  http://127.0.0.1:8000/posts/create
+POST  http://127.0.0.1:8000/api/v1/posts/create
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo3LCJleHAiOjE2NDI1MjA4ODcsImlhdCI6MTY0MjUxNzI4N30.QSTunxFRxx31zueb0hB_CCuUuA2o7wG_NYYuJ-U4cY0
 
 {
-  "title": "Post Title",
-  "content": "Post Content"
+  "title": "Post Title ten",
+  "content": "Post Content ten"
 }
 
 
 ###
-GET http://127.0.0.1:8000/posts/detail/5
+GET http://127.0.0.1:8000/api/v1/posts/detail/5
 
 
-###
-GET http://127.0.0.1:8000/posts/latest
-
-###
-DELETE  http://127.0.0.1:8000/posts/delete/1
+###/api/v1/api/v1
+GET http://127.0.0.1:8000/api/v1/posts/latest
 
 ###
-PUT http://127.0.0.1:8000/posts/edit/1
+DELETE  http://127.0.0.1:8000/api/v1/posts/delete/1
+
+###
+PUT http://127.0.0.1:8000/api/v1/posts/edit/2
 Content-Type: application/json
 
 {
@@ -35,3 +38,27 @@ Content-Type: application/json
 
 ###
 GET http://127.0.0.1:8000/docs
+
+###
+GET http://127.0.0.1:8000/sqlalchemy
+
+###
+POST http://127.0.0.1:8000/api/v1/users/create
+Content-Type: application/json
+
+{
+  "email": "tina@gmail.com",
+  "password": "password"
+}
+
+###
+GET http://127.0.0.1:8000/api/v1/users/detail/5
+
+###
+POST http://127.0.0.1:8000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "tina@gmail.com",
+  "password": "password"
+}
