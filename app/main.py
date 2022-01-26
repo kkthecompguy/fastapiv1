@@ -1,7 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from . import models
-from .database import engine
 from .routes import posts, users, auth, votes
 
 app = FastAPI()
@@ -29,4 +27,4 @@ app.include_router(votes.router)
 
 @app.get('/')
 async def root():
-  return {'message': 'welcome to api creation with fastapi bind mount works'}
+  return {'message': 'welcome to api creation with fastapi with CI/CD'}
