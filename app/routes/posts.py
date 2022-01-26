@@ -77,18 +77,19 @@ async def delete_post(id: int, db: Session = Depends(get_db), current_user: int 
   return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-@router.put('/edit/{id}', response_model=schemas.PostResponse)
+@router.put('/edit/{id}')
 async def update_post(id: int, payload: schemas.PostCreate, db: Session = Depends(get_db), current_user = Depends(oauth2.get_current_user)):
   # cursor.execute(""" update posts set title = %s, content = %s, published = %s where id = %s returning * """, (payload.title, payload.content, payload.published, str(id)))
   # post = cursor.fetchone()
   # conn.commit()
-  post = db.query(models.Post).filter(models.Post.id == id)
-  if post.first() == None:
+  post_query = db.query(models.Post).filter(models.Post.id == id)
+  post = post_query.first()
+  if post == None:
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post does not exist")
 
-  if post.first().owner_id != current_user.id:
+  if post.owner_id != current_user.id:
     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action") 
 
-  post.update(payload.dict(), synchronize_session=False)
+  post_query.update(payload.dict(), synchronize_session=False)
   db.commit()
-  return {'data': post.first()}
+  return {"data": "post updated successfully"}

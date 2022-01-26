@@ -29,4 +29,4 @@ app.include_router(votes.router)
 
 @app.get('/')
 async def root():
-  return {'message': 'welcome to api creation with fastapi'}
+  return {'message': 'welcome to api creation with fastapi bind mount works'}

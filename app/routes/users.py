@@ -23,7 +23,6 @@ async def create_user(payload: schemas.UserCreate, db:Session = Depends(get_db))
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    print(new_user)
     return {'message': 'user created successfully'}
   except Exception as e:
     print(e)
@@ -34,8 +33,6 @@ async def create_user(payload: schemas.UserCreate, db:Session = Depends(get_db))
 @router.get('/detail/{id}', response_model=schemas.UserResponse)
 async def get_user(id: int, db: Session = Depends(get_db)):
   user = db.query(models.User).filter(models.User.id == id).first()
-  print(id)
-  print(user)
   if user == None:
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="user does not exist")
 
