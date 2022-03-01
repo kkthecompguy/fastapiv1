@@ -1,11 +1,22 @@
-FROM python:3.9.7
+FROM python:3.9.7-slim
 
 WORKDIR /usr/src/app
 
 COPY requirements.txt ./
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN python -m venv /opt/venv
+
+RUN /opt/venv/bin/pip install --upgrade pip
+
+RUN apt-get update \
+    && apt-get -y install libpq-dev gcc
+
+RUN /opt/venv/bin/pip install -r requirements.txt
 
 COPY . .
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+RUN chmod +x entrypoint.sh
+
+# CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+CMD [ "/usr/src/app/entrypoint.sh" ]

@@ -1,33 +1,39 @@
 version: '3'
 services:
   api:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: kosamtech/fastapi  
     depends_on:
-      - postgres
+      - postgres_db
     ports: 
       - 8000:8000
     volumes:
-      - ./:/usr/src/app:ro
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      - ./:/usr/src/app
+    command: sh -c "chmod +x /usr/src/app/entrypoint.sh && sh /usr/src/app/entrypoint.sh"
     env_file:
       - ./.env
     environment:
-      - DATABASE_HOSTNAME=postgres
+      - DATABASE_HOSTNAME=postgres_db
       - DATABASE_PORT=5432
-      - DATABASE_USERNAME=postgres
+      - DATABASE_USERNAME=fastapi
       - DATABASE_PASSWORD=root
       - DATABASE_NAME=fastapi
       - SECRET_KEY=09d25e094faa6ca2556c818166b76
       - ALGORITHM=HS256
       - ACCESS_TOKEN_EXPIRE_MINUTES=60
 
-  postgres:
+  postgres_db:
     image: postgres
     environment:
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=fastapi
+      - POSTGRES_USER=fastapi
+    ports:
+      - 5433:5432
     volumes:
-      - postgres-db:/var/lib/postgresql/data
+      - fastapi-db:/var/lib/postgresql/data
 
 volumes:
-  postgres-db:
+  fastapi-db:
