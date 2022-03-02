@@ -4,10 +4,11 @@ services:
     image: kosamtech/fastapi
     depends_on:
       - postgres_db
+    command: sh -c "chmod +x /usr/src/app/entrypoint.sh && sh /usr/src/app/entrypoint.sh"
     ports: 
-      - 80:8000
+      - 8000:8000
     environment:
-      - DATABASE_HOSTNAME=${DATABASE_HOSTNAME}
+      - DATABASE_HOSTNAME=postgres_db
       - DATABASE_PORT=${DATABASE_PORT}
       - DATABASE_USERNAME=${DATABASE_USERNAME}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
