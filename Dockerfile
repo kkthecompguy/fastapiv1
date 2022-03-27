@@ -13,6 +13,12 @@ RUN apt-get update \
 
 RUN /opt/venv/bin/pip install -r requirements.txt
 
+# RUN groupadd -r slim && useradd -g slim slim
+
+# RUN chown -R slim:slim /usr/src/app
+
+# USER slim
+
 COPY . .
 
 RUN chmod +x entrypoint.sh
